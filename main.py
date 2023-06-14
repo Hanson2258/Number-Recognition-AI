@@ -1,3 +1,5 @@
+# Created from guide: https://www.youtube.com/watch?v=bte8Er0QhDg
+
 # What each library is for:
 # cv2 - For Computer Vision
 # numpy - For working with arrays
