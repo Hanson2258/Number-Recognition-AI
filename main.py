@@ -1,16 +1,29 @@
-# This is a sample Python script.
+# What each library is for:
+# cv2 - For Computer Vision
+# numpy - For working with arrays
+# matplotlib - For data visualization (not needed)
+# tensorflow - Machine learning
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import os
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow as tf
 
+mnist = tf.keras.datasets.mnist
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+x_train = tf.keras.utils.normalize(x_train, axis=1)
+x_test = tf.keras.utils.normalize(x_test, axis=1)
 
+model = tf.keras.models.Sequential()
+model.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
+model.add(tf.keras.layers.Dense(128, activation='relu'))
+model.add(tf.keras.layers.Dense(128, activation='relu'))
+model.add(tf.keras.layers.Dense(10, activation='softmax'))
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+model.fit(x_train, y_train, epochs=3)
+
+model.save('handwritten.model')
